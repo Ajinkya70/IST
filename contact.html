@@ -1,8 +1,5 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
-
-
-<!-- Mirrored from html.bdevs.net/Its Social Time-prev/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 30 Aug 2024 15:32:05 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -275,21 +272,22 @@
                                 </div>
                                 <div class="col-xl-8 col-lg-8">
                                     <div class="fm-contact-info-form ml-50">
-                                        <form action="#">
+                                        <form id="contactForm">
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-6">
-                                                    <input type="text" placeholder="Name">
+                                                <div class="col-xl-4 col-lg-4">
+                                                    <input type="text" id="name" placeholder="Name" required>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-6">
-                                                    <input type="email" placeholder="Email">
+                                                <div class="col-xl-4 col-lg-4">
+                                                    <input type="email" id="email" placeholder="Email" required>
                                                 </div>
-
+                                                <div class="col-xl-4 col-lg-4">
+                                                    <input type="tel" id="mobile" placeholder="Mobile" pattern="^\d{10}$" required>
+                                                </div>
                                             </div>
-                                            <input type="text" placeholder="Subject">
-                                            <textarea name="fmmessage" id="fmmessage"
-                                                      placeholder="Type your message..."></textarea>
+                                            <input type="text" id="subject" placeholder="Subject" required>
+                                            <textarea name="fmmessage" id="fmmessage" placeholder="Type your message..." required></textarea>
                                             <button type="submit">
-                                                Send Message on  <i class="fab fa-whatsapp fa-1x"></i>
+                                                Send Message on <i class="fab fa-whatsapp fa-1x"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -442,6 +440,41 @@
     </footer>
     <!-- footer-area-end -->
     <!-- JS here -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Perform form validation
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var mobile = document.getElementById('mobile').value.trim();
+            var subject = document.getElementById('subject').value.trim();
+            var message = document.getElementById('fmmessage').value.trim();
+
+            if (!name || !email || !mobile || !subject || !message) {
+                alert('All fields are required.');
+                return;
+            }
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            var mobilePattern = /^\d{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                alert('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+
+            // Construct the WhatsApp URL
+            var url = `https://api.whatsapp.com/send?phone=9819413273&text=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMobile: ${encodeURIComponent(mobile)}%0ASubject: ${encodeURIComponent(subject)}%0AMessage: ${encodeURIComponent(message)}`;
+
+            // Open the WhatsApp URL in a new tab
+            window.open(url, '_blank');
+        });
+    </script>
     <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -467,7 +500,4 @@
     <script src="assets/js/ui-range-slider.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
-
-
-<!-- Mirrored from html.bdevs.net/Its Social Time-prev/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 30 Aug 2024 15:32:05 GMT -->
 </html>
